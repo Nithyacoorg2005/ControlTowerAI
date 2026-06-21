@@ -1,0 +1,15 @@
+# Local environment variables
+.env
+.env.local
+.env.*.local
+
+# Python virtual environments
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+
+# Node modules (for your frontend)
+node_modules/
+dist/
