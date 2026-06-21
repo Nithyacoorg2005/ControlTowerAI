@@ -31,9 +31,12 @@ async def process_documents(files: List[UploadFile] = File(...)):
             decoded_text = content.decode('utf-8', errors='ignore')
             data_tasks.append(data.analyze_tabular_data(filename, decoded_text))
             
-        elif filename.endswith(('.pdf', '.txt')) or mime_type == "text/plain":
-            decoded_text = content.decode('utf-8', errors='ignore')
-            text_tasks.append(text.analyze_unstructured_text(filename, decoded_text))
+        # Route to Text Agent (Natively handling PDFs and TXT files)
+        elif filename.endswith('.pdf') or mime_type == "application/pdf":
+            text_tasks.append(text.analyze_document(filename, "application/pdf", content))
+            
+        elif filename.endswith('.txt') or mime_type == "text/plain":
+            text_tasks.append(text.analyze_document(filename, "text/plain", content))
             
         else:
             print(f"Skipping unsupported file type: {filename}")

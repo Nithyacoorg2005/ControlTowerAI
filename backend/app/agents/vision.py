@@ -31,12 +31,13 @@ async def analyze_image(file_name: str, mime_type: str, image_bytes: bytes) -> d
             "data": image_bytes
         }
 
+        # The correct call for vision.py
         response = await generate_content_with_retry(
             model=model,
-            contents=prompt,
+            contents=[prompt, image_part], # Notice the array for multimodal input
             generation_config=genai.GenerationConfig(
                 response_mime_type="application/json",
-                response_schema=DataExtractionResult,
+                response_schema=VisionExtractionResult, # THIS MUST BE VisionExtractionResult
                 temperature=0.1,
             )
         )

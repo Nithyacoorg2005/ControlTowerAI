@@ -33,13 +33,14 @@ async def synthesize_executive_briefing(
     """
 
     try:
+        # The correct call for synthesizer.py
         response = await generate_content_with_retry(
             model=model,
             contents=prompt,
             generation_config=genai.GenerationConfig(
                 response_mime_type="application/json",
-                response_schema=DataExtractionResult,
-                temperature=0.1,
+                response_schema=DashboardPayload, # THIS MUST BE DashboardPayload
+                temperature=0.2,
             )
         )
         
