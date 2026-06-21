@@ -32,16 +32,7 @@ export default function UploadCenter({ onProcessStart }) {
     }
   };
 
-  
-  const loadDemoAssets = () => {
-    setFiles([
-      { name: "Q3_Financial_Projections.xlsx", type: "Excel", size: "2.4 MB" },
-      { name: "Project_Alpha_Vendor_Contract.pdf", type: "PDF", size: "1.1 MB" },
-      { name: "Customer_Escalation_Log_Oct.csv", type: "CSV", size: "0.8 MB" },
-      { name: "Engineering_Standup_Notes.txt", type: "Text", size: "0.1 MB" },
-      { name: "AWS_Billing_Screenshot.png", type: "Image", size: "3.2 MB" },
-    ]);
-  };
+
 
   const removeFile = (indexToRemove) => {
     setFiles(files.filter((_, index) => index !== indexToRemove));
@@ -90,12 +81,7 @@ export default function UploadCenter({ onProcessStart }) {
 
        
         <div className="mt-6 flex justify-between items-center">
-          <button 
-            onClick={loadDemoAssets}
-            className="text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors"
-          >
-            + Load Demo Assets
-          </button>
+         
           
           <button 
             onClick={() => onProcessStart(files)}
