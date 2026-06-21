@@ -1,6 +1,7 @@
 import json
 import google.generativeai as genai
 from app.core.schemas import DashboardPayload
+from app.services.gemini import generate_content_with_retry
 
 model = genai.GenerativeModel("gemini-2.5-flash")
 

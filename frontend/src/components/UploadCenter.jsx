@@ -20,24 +20,15 @@ export default function UploadCenter({ onProcessStart }) {
     e.preventDefault();
     setIsDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const newFiles = Array.from(e.dataTransfer.files).map(file => ({
-        name: file.name,
-        type: file.type || 'Document',
-        size: (file.size / 1024 / 1024).toFixed(2) + ' MB'
-      }));
-      setFiles(prev => [...prev, ...newFiles]);
+      // Push the raw File object directly into state
+      setFiles(prev => [...prev, ...Array.from(e.dataTransfer.files)]);
     }
   };
 
-  
   const handleFileSelect = (e) => {
     if (e.target.files && e.target.files.length > 0) {
-      const newFiles = Array.from(e.target.files).map(file => ({
-        name: file.name,
-        type: file.type || 'Document',
-        size: (file.size / 1024 / 1024).toFixed(2) + ' MB'
-      }));
-      setFiles(prev => [...prev, ...newFiles]);
+      // Push the raw File object directly into state
+      setFiles(prev => [...prev, ...Array.from(e.target.files)]);
     }
   };
 
@@ -130,11 +121,15 @@ export default function UploadCenter({ onProcessStart }) {
                 <div key={idx} className="flex items-center justify-between bg-gray-950 border border-gray-800 p-3 rounded-lg group">
                   <div className="flex items-center gap-3 overflow-hidden">
                     <div className="h-8 w-8 rounded bg-gray-800 flex items-center justify-center text-xs font-bold text-gray-400">
-                      {file.type.substring(0,3).toUpperCase()}
+                      {/* Safely extract a 3-letter type indicator from the raw file */}
+                      {(file.type ? file.type.split('/').pop() : 'DOC').substring(0,3).toUpperCase()}
                     </div>
                     <div className="truncate">
                       <p className="text-sm font-medium text-gray-200 truncate">{file.name}</p>
-                      <p className="text-xs text-gray-500">{file.size}</p>
+                      <p className="text-xs text-gray-500">
+                        {/* Dynamically calculate MB if it's a raw File object, otherwise use the mock string */}
+                        {typeof file.size === 'number' ? (file.size / 1024 / 1024).toFixed(2) + ' MB' : file.size}
+                      </p>
                     </div>
                   </div>
                   <button 

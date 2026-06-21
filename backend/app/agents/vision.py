@@ -1,6 +1,7 @@
 import json
 import google.generativeai as genai
 from app.core.schemas import VisionExtractionResult
+from app.services.gemini import generate_content_with_retry
 
 # Gemini 2.5 Flash is natively multimodal and extremely fast at parsing charts/dashboards.
 model = genai.GenerativeModel("gemini-2.5-flash")
